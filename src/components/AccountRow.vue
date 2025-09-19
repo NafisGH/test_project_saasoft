@@ -1,10 +1,12 @@
 <!-- src/components/AccountRow.vue -->
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import type { AccountDTO, AccountType } from "@/types/account";
 import { useAccountsStore } from "@/store/accounts";
 import { parseLabels, stringifyLabels } from "@/utils/labels";
 import IconDelete from "@/icons/iconDelete.vue";
+
+const isLocal = computed(() => type.value === "LOCAL");
 
 const props = defineProps<{
   account: AccountDTO;
@@ -125,7 +127,7 @@ function emitRemove() {
 </script>
 
 <template>
-  <div class="row">
+  <div class="row" :class="isLocal ? 'row--local' : 'row--ldap'">
     <!-- Метка -->
     <div class="field" :class="{ invalid: errors.labels }">
       <label class="label">Метка</label>
@@ -165,7 +167,7 @@ function emitRemove() {
 
     <!-- Пароль (только для Локальная) -->
     <div
-      class="field"
+      class="field field--password"
       v-if="type === 'LOCAL'"
       :class="{ invalid: errors.password }"
     >
@@ -196,15 +198,32 @@ function emitRemove() {
 <style scoped>
 .row {
   display: grid;
-  grid-template-columns: 1fr 150px 1.5fr 140px auto;
   gap: 12px;
   align-items: end;
+}
+.row--local {
+  grid-template-columns: 1fr 150px 1.5fr 140px auto;
+}
+.row--ldap {
+  grid-template-columns: 1fr 150px 2fr auto; /* логин растянется */
+}
+.field--password {
+  grid-column: 4;
+}
+
+.row--local .field--actions {
+  grid-column: 5;
+  justify-self: end;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+.row--ldap .field--actions {
+  grid-column: 4;
+  justify-self: end;
 }
 .label {
   font-size: 13px;
@@ -221,9 +240,8 @@ function emitRemove() {
   opacity: 0.75;
 }
 .field--actions {
-  width: 18px;
-  height: 18px;
-  align-self: center;
-  margin-top: 5px;
+  grid-column: 5;
+  justify-self: end;
+  align-items: flex-end;
 }
 </style>
