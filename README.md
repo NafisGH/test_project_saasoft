@@ -22,10 +22,10 @@ Element Plus (UI-компоненты)
 Node.js >= 18
 
 npm (или pnpm/yarn — на выбор)
-Запуск проекта 
-Вариант 1
-https://68cd82fda91c01d781c36044--projectsaasoft.netlify.app/
-Вариант 2
+# Запуск проекта 
+ Вариант 1
+  https://68cd82fda91c01d781c36044--projectsaasoft.netlify.app/
+ Вариант 2
  1) Клонировать репозиторий
 git clone [<URL_репозитория>] cd <папка_проекта>
  2) Установить зависимости
