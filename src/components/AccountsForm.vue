@@ -2,6 +2,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useAccountsStore } from "@/store/accounts";
+import AccountRow from "./AccountRow.vue";
+import { ElButton } from "element-plus";
 
 const store = useAccountsStore();
 const accounts = computed(() => store.all);
