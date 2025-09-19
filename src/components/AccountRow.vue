@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import type { AccountDTO, AccountType, LabelObj } from "@/types/account";
+import { useAccountsStore } from "@/store/accounts";
+import { parseLabels } from "@/utils/labels";
 
 function stringifyLabels(labels: LabelObj[]): string {
   return labels.map((l) => l.text).join("; ");
@@ -13,6 +15,8 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: "remove", id: string): void;
 }>();
+
+const store = useAccountsStore();
 
 function emitRemove() {
   emit("remove", props.account.id);
@@ -45,30 +49,54 @@ watch(
 
 // Валидации
 function validateLabels(): boolean {
-  if (!labelsText.value) return true; // необязательно
+  if (!labelsText.value) return true;
   return labelsText.value.length <= 50;
 }
 function validateLogin(): boolean {
   return login.value.trim().length > 0 && login.value.length <= 100;
 }
 function validatePassword(): boolean {
-  // пока не учитываем тип, просто обязательность и длину
   return password.value.trim().length > 0 && password.value.length <= 100;
 }
 
-// Обработчики
+//  Обработчики
 function onLabelsBlur() {
-  errors.value.labels = !validateLabels();
+  const ok = validateLabels();
+  errors.value.labels = !ok;
+  if (ok) {
+    store.update({
+      id: props.account.id,
+      labels: parseLabels(labelsText.value),
+    });
+  }
 }
 function onTypeChange() {
   errors.value.login = !validateLogin();
   errors.value.password = !validatePassword();
+  store.update({
+    id: props.account.id,
+    type: type.value,
+  });
 }
 function onLoginBlur() {
-  errors.value.login = !validateLogin();
+  const ok = validateLogin();
+  errors.value.login = !ok;
+  if (ok) {
+    store.update({
+      id: props.account.id,
+      login: login.value,
+    });
+  }
 }
 function onPasswordBlur() {
-  errors.value.password = !validatePassword();
+  const ok = validatePassword();
+  errors.value.password = !ok;
+  if (ok) {
+    store.update({
+      id: props.account.id,
+      password: password.value,
+    });
+  }
 }
 </script>
 
@@ -76,7 +104,7 @@ function onPasswordBlur() {
   <div class="row">
     <!-- Метка -->
     <div class="field" :class="{ invalid: errors.labels }">
-      <label class="label">Метка</label>
+      <label class="label">Метка (необязательно)</label>
       <el-input
         v-model="labelsText"
         placeholder="prod; critical"
@@ -101,7 +129,7 @@ function onPasswordBlur() {
 
     <!-- Логин -->
     <div class="field" :class="{ invalid: errors.login }">
-      <label class="label">Логин</label>
+      <label class="label">Логин *</label>
       <el-input
         v-model="login"
         placeholder="Введите логин"
@@ -113,7 +141,7 @@ function onPasswordBlur() {
 
     <!-- Пароль -->
     <div class="field" :class="{ invalid: errors.password }">
-      <label class="label">Пароль</label>
+      <label class="label">Пароль *</label>
       <el-input
         v-model="password"
         type="password"
