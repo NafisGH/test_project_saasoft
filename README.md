@@ -1,6 +1,6 @@
 # Vue 3 + TypeScript + Vite
 
-Форма для управления списком учетных записей по ТЗ.
+Форма для управления списком учетных записей.
 Соблюдены структура полей, логика валидаций и сохранение состояния между перезагрузками.
 
 # Стек
@@ -11,7 +11,7 @@ TypeScript
 
 Vite
 
-Pinia (стейт-менеджер, персист в localStorage)
+Pinia (стейт-менеджер, localStorage)
 
 Element Plus (UI-компоненты)
 
@@ -24,7 +24,7 @@ Node.js >= 18
 npm (или pnpm/yarn — на выбор)
 
 # 1) Клонировать репозиторий
-git clone URL_вашего_репозитория>](https://github.com/NafisGH/test_project_saasoft.git)
+git clone [<URL_репозитория>](https://github.com/NafisGH/test_project_saasoft.git)
 cd <папка_проекта>
 
 # 2) Установить зависимости
