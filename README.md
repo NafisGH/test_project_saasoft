@@ -1,5 +1,41 @@
 # Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Форма для управления списком учетных записей по ТЗ.
+Соблюдены структура полей, логика валидаций и сохранение состояния между перезагрузками.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+# Стек
+
+Vue 3 (Composition API)
+
+TypeScript
+
+Vite
+
+Pinia (стейт-менеджер, персист в localStorage)
+
+Element Plus (UI-компоненты)
+
+(Иконки) собственный компонент IconDelete.vue в src/icons или @element-plus/icons-vue
+
+# Требования среды
+
+Node.js >= 18
+
+npm (или pnpm/yarn — на выбор)
+
+# 1) Клонировать репозиторий
+git clone URL_вашего_репозитория>](https://github.com/NafisGH/test_project_saasoft.git)
+cd <папка_проекта>
+
+# 2) Установить зависимости
+npm install
+
+# 3) Запустить dev-сервер
+npm run dev
+# Откройте в браузере адрес, который выведет Vite
+
+# 4) Сборка продакшен-версии
+npm run build
+
+# 5) Локальный предпросмотр собранной версии
+npm run preview
