@@ -30,7 +30,6 @@ export const useAccountsStore = defineStore("accounts", {
   },
 
   actions: {
-    // Добавяем пустую запись в конец списка и сразу сохранить
     addEmpty(): string {
       const acc: AccountDTO = {
         id: makeId(),
@@ -50,26 +49,34 @@ export const useAccountsStore = defineStore("accounts", {
     },
 
     update(payload: Partial<AccountDTO> & { id: string }) {
+      const current = this.items.find((a) => a.id === payload.id);
+      if (!current) return;
+
+      const nextType: AccountType = payload.type ?? current.type;
+
+      const next: AccountDTO = {
+        id: current.id,
+        labels: payload.labels ?? current.labels,
+        type: nextType,
+        login: payload.login ?? current.login,
+        password:
+          nextType === "LDAP"
+            ? null
+            : payload.password ?? current.password ?? "",
+      };
+
       const idx = this.items.findIndex((a) => a.id === payload.id);
-      if (idx === -1) return;
-
-      const next = { ...this.items[idx], ...payload };
-
-      if (next.type === "LDAP") {
-        next.password = null;
+      if (idx !== -1) {
+        this.items.splice(idx, 1, next);
+        saveToStorage(this.items);
       }
-
-      this.items.splice(idx, 1, next);
-      saveToStorage(this.items);
     },
 
-    /** Полная замена (если понадобится импорта/ресета) */
     replaceAll(next: AccountDTO[]) {
       this.items = next;
       saveToStorage(this.items);
     },
 
-    /** Сброс стора (удалить всё) */
     clear() {
       this.items = [];
       saveToStorage(this.items);
