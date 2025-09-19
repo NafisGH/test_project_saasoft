@@ -1,10 +1,17 @@
 <script setup lang="ts">
-// import HelloWorld from "./components/HelloWorld.vue";
+import AccountsForm from "./components/AccountsForm.vue";
 </script>
 
 <template>
-  <el-button>Click me</el-button>
-  <!-- <HelloWorld /> -->
+  <main class="page">
+    <AccountsForm />
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+.page {
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 16px;
+}
+</style>

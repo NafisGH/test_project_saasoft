@@ -1,4 +1,4 @@
-import type { LabelObj } from "../types/account";
+import type { LabelObj } from "@/types/account";
 
 /**
  *  Преобразуем строку меток, разделенных запятыми, в массив объектов меток.

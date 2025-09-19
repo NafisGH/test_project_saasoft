@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { AccountDTO, AccountType } from "../types/account";
+import type { AccountDTO, AccountType } from "@/types/account";
 
 const STORAGE_KEY = "accounts";
 
